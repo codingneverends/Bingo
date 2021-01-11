@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "public": "public",
+    "site":"bingobycne",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

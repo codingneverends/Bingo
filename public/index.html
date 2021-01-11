@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+  <title>Bingo:CodingNeverEnds</title>
+</head>
+<body onload="init()">
+  <div class="mroom" id="EditName">
+    <input type="text" id="playernameenter"  value="Player">
+    <button onclick="Name(true)">OK</button>
+  </div>
+  <div id="game">
+    <div class="mbox">
+      <div class="box">
+        <div class="turn" id="turn">Your Turn</div>
+      </div>
+      <div class="box">
+        <div class="eleflex">
+          <div class="btns"><button onclick="Shuffle()">Shuffle</button></div>
+          <div class="btns"><button onclick="iamready()">Ready</button></div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="eleflex">
+          <div class="eles m"><div class="absele"><div class="str"></div>B</div></div>
+          <div class="eles m"><div class="absele"><div class="str"></div>I</div></div>
+          <div class="eles m"><div class="absele"><div class="str"></div>N</div></div>
+          <div class="eles m"><div class="absele"><div class="str"></div>G</div></div>
+          <div class="eles m"><div class="absele"><div class="str"></div>O</div></div>
+        </div>
+        <div class="eleflex">
+          <div class="eles" id="ele0">1</div>
+          <div class="eles" id="ele1">2</div>
+          <div class="eles" id="ele2">3</div>
+          <div class="eles" id="ele3">4</div>
+          <div class="eles" id="ele4">5</div>
+        </div>
+        <div class="eleflex">
+          <div class="eles" id="ele5">6</div>
+          <div class="eles" id="ele6">7</div>
+          <div class="eles" id="ele7">8</div>
+          <div class="eles" id="ele8">9</div>
+          <div class="eles" id="ele9">10</div>
+        </div>
+        <div class="eleflex">
+          <div class="eles" id="ele10">11</div>
+          <div class="eles" id="ele11">12</div>
+          <div class="eles" id="ele12">13</div>
+          <div class="eles" id="ele13">14</div>
+          <div class="eles" id="ele14">15</div>
+        </div>
+        <div class="eleflex">
+          <div class="eles" id="ele15">16</div>
+          <div class="eles" id="ele16">17</div>
+          <div class="eles" id="ele17">18</div>
+          <div class="eles" id="ele18">19</div>
+          <div class="eles" id="ele19">20</div>
+        </div>
+        <div class="eleflex">
+          <div class="eles" id="ele20">21</div>
+          <div class="eles" id="ele21">22</div>
+          <div class="eles" id="ele22">23</div>
+          <div class="eles" id="ele23">24</div>
+          <div class="eles" id="ele24">25</div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="chat">
+          <div class="msghead">Public Chat</div>
+          <div class="chatele" id="chats">
+            <div class="cname">Gagan</div>
+            <div class="msg">Hi all</div>
+            <div class="cname">Gagan</div>
+            <div class="msg">Hi all</div>
+            <div class="cname">Gagan</div>
+            <div class="msg">Hi all</div>
+            <div class="cname">Gagan</div>
+            <div class="msg">Hi all</div>
+            <div class="cname">Gagan</div>
+            <div class="msg">Hi all</div>
+            <div class="cname">Gagan</div>
+            <div class="msg">Hi all</div>
+          </div>
+          <div class="send">
+            <input type="text" id="msg">
+            <button onclick="sendmessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mroom" id="waiting">
+    <div class="box">
+      <div class="ele">Waiting For Others</div>
+      <div id="waitingq">1/4</div>
+    </div>
+  </div>
+  <div class="mroom">
+    <div id="playername" onclick="Name(false)">Player</div>
+    <div class="box">
+      <h2>Bingo</h2>
+      <div class="radiocj">
+        <div class="ele" id="croom" onclick="Join(false)">Create a room</div>
+        <div class="ele" id="jroom" onclick="Join(true)">Join a room</div>
+      </div>
+      <div id="content">
+        <input type="text" id="name" placeholder="RoomName">
+        <button onclick="JoinGame()">Join</button>
+      </div>
+    </div>
+  </div>
+  <div class="mroom" id="fscreen">
+    <div class="box">
+      <div class="gameover">GameOver</div>
+      <div class="flexbb">
+        <div class="box"><div class="result m">Player</div></div>
+        <div class="box"></div><div class="result m">Rank</div></div>
+      </div>
+    </div>
+  </div>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-database.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+    apiKey: "AIzaSyCMRxOaSnssAKN5qozRZG-U4FC1drMigLs",
+    authDomain: "bingo-1d016.firebaseapp.com",
+    databaseURL: "https://bingo-1d016.firebaseio.com",
+    projectId: "bingo-1d016",
+    storageBucket: "bingo-1d016.appspot.com",
+    messagingSenderId: "166645970662",
+    appId: "1:166645970662:web:9a7333358d602467b3ad27",
+    measurementId: "G-D2CT46GNJV"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+  <script src="index.js"></script>
+</body>
+</html>
